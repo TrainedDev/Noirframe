@@ -7,8 +7,8 @@ const Footer = () => {
       {/* Top Footer */}
       <div className="max-w-7xl mx-auto px-6 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
-        <div className="flex flex-col gap-4">
-          <img src="/movie_logo.png" alt="logo" className="w-36" />
+        <div className="flex flex-col justify-center items-center gap-4">
+          <img src="/noirframe.png" alt="logo" className="w-[50%] sm:w-full" />
           <p className="text-sm text-gray-400 leading-6">
             Watch movies, TV shows, and exclusive content anytime, anywhere.
             Streaming without unnecessary buffering-induced rage.
@@ -60,7 +60,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-neutral-800">
         <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row gap-3 justify-between items-center text-xs text-gray-500">
-          <p>© 2026 StreamIt Clone. No lawyers were consulted.</p>
+          <p>© 2026 NoirFrame. Legally distinct. Emotionally familiar.</p>
           <ul className="flex gap-5">
             <li className="hover:text-white cursor-pointer">Privacy Policy</li>
             <li className="hover:text-white cursor-pointer">Terms</li>

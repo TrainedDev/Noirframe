@@ -3,13 +3,19 @@ import cors from "cors"
 import movieRoutes from "./routes/movieRoutes.js";
 import { errorHandler } from "./middlewere/handlers.js";
 import { connectRedis } from "./config/redis.js";
+import { config } from "dotenv";
+
+config();
 
 const app = express();
+const PORT = process.env.PORT;
 
 connectRedis();
 
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: PORT,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
 }));
 app.use(express.json());
 app.use("/movies",  movieRoutes)

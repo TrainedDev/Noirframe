@@ -42,18 +42,18 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full bg-black flex gap-3 justify-center text-white items-center capitalize h-7 sm:h-10  ${
+      className={`w-full bg-black flex gap-7 lg:gap-30 justify-center text-white items-center capitalize h-7 sm:h-10  ${
         moviePage ? "absolute z-10 bg-transparent text-black/30" : ""
       } `}
     >
       <Link
         to={"/"}
-        className="h-full w-[33%] overflow-hidden flex p-25 justify-start items-center lg:w-[30%]"
+        className="h-full w-[25%] overflow-hidden  flex justify-start items-center lg:w-[15%]"
       >
         <img
-          src="/noirframe.png"
+          src="/web_name.png"
           alt="NoirFrame"
-          className="h-auto w-full mt-2 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)]"
+          className="h-auto w-full pt-2 lg:pt-4 drop-shadow-[0_0_6px_rgba(255,255,255,0.15)]"
         />
       </Link>
       <div className="h-[42%] flex text-white flex-col justify-center items-center w-[45%] md:h-[50%] md:w-[50%] lg:h-[60%] lg:w-[50%] relative">
