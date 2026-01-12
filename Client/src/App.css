@@ -1,0 +1,50 @@
+@import "tailwindcss";
+/* @import "tw-animate-css"; */
+/* please don't do this to all elements. */
+
+/* Custom animations */
+.animate-slide {
+  animation: slide 20s linear infinite;
+}
+
+.animate-translate {
+  animation: slideLeft 1s ease-out;
+}
+.custom-scroll::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: rgb(31, 31, 31);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #b8b8b8;
+  /* border-radius: 9999px; */
+}
+@keyframes slideLeft {
+  from {
+    transform: translateX(40%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(-200%);
+  }
+  75% {
+    transform: translateX(-300%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
