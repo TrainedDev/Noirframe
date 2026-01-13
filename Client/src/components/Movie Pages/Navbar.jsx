@@ -39,6 +39,11 @@ const Navbar = () => {
       ? ele
       : null
   );
+  const getPosterSize = () => {
+    if (window.innerWidth < 480) return "w342";
+    if (window.innerWidth < 768) return "w500";
+    return "w780";
+  };
 
   return (
     <nav
@@ -97,11 +102,17 @@ const Navbar = () => {
               <li key={ele.id}>
                 <Link
                   to={`/movie/page/${ele.id}`}
-                  onClick={() =>{ setSearchVal(""); setDisplay(false);}}
+                  onClick={() => {
+                    setSearchVal("");
+                    setDisplay(false);
+                  }}
                   className="px-3 py-2 flex gap-5 items-center hover:bg-white/5"
                 >
                   <img
-                    src={`https://image.tmdb.org/t/p/w342${ele.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/${getPosterSize()}${
+                      ele.poster_path
+                    }`}
+                    loading="lazy"
                     className="w-[15%] aspect-2/3 rounded-xs object-cover"
                   />
                   <h2 className="hover:text-red-600">{ele.original_title}</h2>

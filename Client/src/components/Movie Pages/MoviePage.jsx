@@ -78,22 +78,37 @@ const MoviePage = () => {
           <section className=" w-full aspect-video">
             {playing ? (
               <>
-                {videoLoading && <DataLoading />}
-                <div className="w-full flex justify-center items-end h-full lg:h-[80%]">
-                  <iframe
-                    src={movieTrailer?.embedUrl}
-                    className={`${
-                      videoLoading ? "opacity-0" : "opacity-100"
-                    } w-[90%] h-[90%]`}
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen"
-                    allowFullScreen
-                    onLoad={() => setVideoLoading(false)}
-                  />
-                  <div className="h-[90%] w-[2%]">
-                    <Cross
-                      onClick={() => setPlaying(false)}
-                      className="w-full scale-130 hover:animate-spin text-white/90 cursor-pointer rotate-45"
+                <div className="w-full h-full flex items-center justify-center relative">
+                  {/* Loader */}
+                  {videoLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center z-20">
+                      <DataLoading />
+                    </div>
+                  )}
+
+                  {/* Video container */}
+                  <div
+                    className={`w-full h-full lg:h-[80%] flex items-center justify-center transition-opacity duration-300
+      ${videoLoading ? "opacity-0 pointer-events-none" : "opacity-100"}
+    `}
+                  >
+                    <iframe
+                      src={movieTrailer?.embedUrl}
+                      className="w-[90%] h-[90%] rounded-lg"
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen"
+                      allowFullScreen
+                      onLoad={() => setVideoLoading(false)}
                     />
+
+                    {/* Close button */}
+                    <button
+                      onClick={() => setPlaying(false)}
+                      className="absolute top-4 right-4 z-30 p-2 rounded-full
+                 bg-black/60 hover:bg-black/80 transition"
+                      aria-label="Close video"
+                    >
+                      <Cross className="w-6 h-6 rotate-45 text-white" />
+                    </button>
                   </div>
                 </div>
               </>
@@ -101,7 +116,7 @@ const MoviePage = () => {
               <div
                 className={` justify-end pb-10 flex h-full w-full flex-col bg-cover bg-center tracking-width  text-white snap-start pl-2 lg:flex lg:shadow-[10px_0_120px_60px_black_inset]`}
                 style={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetails?.backdrop_path})`,
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movieDetails?.backdrop_path})`,
                 }}
               >
                 <section className="w-[90%] h-auto hidden item-start flex-col text-white capitalize gap-y-4 p-3 lg:flex bg-red">
@@ -426,7 +441,7 @@ const MoviePage = () => {
               to={`/movie/lists?list-type=topRated`}
               className="text-red-500 text-sm md:text-base font-semibold"
             >
-             check out other movies
+              check out other movies
             </Link>
           </span>
           <Carousel className="w-full h-auto">

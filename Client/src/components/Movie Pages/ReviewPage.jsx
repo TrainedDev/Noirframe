@@ -23,8 +23,11 @@ const ReviewPage = () => {
     dispatch(getMovieReviews(id));
   }, [dispatch, id]);
 
-  console.log(movieData);
-  // console.log(movieData?.vote_average);
+  const getPosterSize = () => {
+    if (window.innerWidth < 480) return "w342";
+    if (window.innerWidth < 768) return "w500";
+    return "w780";
+  };
 
   return (
     <div className="flex p-3 gap-5 flex-col w-screen h-auto justify-center items-center text-gray-200 sm:p-2 text-base font-medium md:gap-2 md:flex-row md:justify-center md:items-start">
@@ -35,7 +38,9 @@ const ReviewPage = () => {
               className={`w-full flex justify-center items-center  p-5 bg-neutral-900 rounded-sm sm:h-120 aspect-2/3`}
             >
               <img
-                src={`https://image.tmdb.org/t/p/w780${movieData?.data.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/${getPosterSize()}${
+                  movieData?.data?.backdrop_path
+                }`}
                 alt="movie image"
                 className="w-full h-full object-center object-cover"
               />

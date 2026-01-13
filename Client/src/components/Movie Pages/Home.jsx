@@ -114,7 +114,7 @@ const Home = () => {
                   nowPlayingTransition ? "transition-all duration-700" : ""
                 }`}
                 style={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/w780${ele.poster_path})`,
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w1280${ele.backdrop_path})`,
                   transform: `translateX(-${nowPlayingIndex * 100}%)`,
                 }}
               >
@@ -259,7 +259,7 @@ const Home = () => {
                   upcomingTransition ? "transition-all duration-700" : ""
                 }`}
                 style={{
-                  backgroundImage: `url(https://image.tmdb.org/t/p/w780${ele.poster_path})`,
+                  backgroundImage: `url(https://image.tmdb.org/t/p/w1280${ele.backdrop_path})`,
                   transform: `translateX(-${upcomingIndex * 100}%)`,
                 }}
               >

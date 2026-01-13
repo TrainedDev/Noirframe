@@ -12,7 +12,7 @@ import SearchedUsersMovies from "./components/Movie Pages/SearchedUsersMovies";
 
 const App = () => {
   const { appSideBar } = useSelector((state) => state.componentData);
-
+  
   return (
     <>
       <Router>

@@ -14,6 +14,12 @@ const ZoomContent = ({ error, movieLists, loading }) => {
     fetchData();
   }, [movieLists]);
 
+  const getPosterSize = () => {
+  if (window.innerWidth < 480) return "w342";
+  if (window.innerWidth < 768) return "w500";
+  return "w780";
+};
+
   return (
     <>
       <CarouselContent
@@ -40,7 +46,8 @@ const ZoomContent = ({ error, movieLists, loading }) => {
                   className={` object-cover object-center transition-transform duration-700 overflow-hidden hover:scale-130  cursor-pointer w-full h-full ${
                     zoom === item ? "scale-130" : "scale-110"
                   }`}
-                  src={`https://image.tmdb.org/t/p/w780${ele?.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/${getPosterSize()}${ele?.backdrop_path}`}
+                  loading="lazy"
                   onTouchStart={() => setZoom(item)}
                   onTouchEnd={() => setZoom(null)}
                 />

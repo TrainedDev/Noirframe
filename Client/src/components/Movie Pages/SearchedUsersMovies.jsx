@@ -26,6 +26,13 @@ const SearchedUsersMovies = () => {
     dispatch(getUserSearchedResults(searchVal));
   };
 
+    const getPosterSize = () => {
+    if (window.innerWidth < 480) return "w342";
+    if (window.innerWidth < 768) return "w500";
+    return "w780";
+  };
+
+  
   return (
     <main
       className="
@@ -131,8 +138,11 @@ const SearchedUsersMovies = () => {
               >
                 <li className="w-full h-full relative flex items-end">
                   <img
-                    src={`https://image.tmdb.org/t/p/w342${ele?.poster_path}`}
+                   src={`https://image.tmdb.org/t/p/${getPosterSize()}${
+                    ele?.backdrop_path
+                  }`}
                     alt="movie"
+                    loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
 

@@ -26,6 +26,12 @@ const TagsPage = () => {
     dispatch(fetchUpcoming_movies());
   }, [dispatch, id, name]);
 
+  const getPosterSize = () => {
+    if (window.innerWidth < 480) return "w342";
+    if (window.innerWidth < 768) return "w500";
+    return "w780";
+  };
+
   return (
     <>
       {filterLoading ? (
@@ -43,7 +49,10 @@ const TagsPage = () => {
                 className={` w-full h-full flex rounded-xs overflow-hidden cursor-pointer lg:h-96 lg:relative`}
               >
                 <img
-                  src={`https://image.tmdb.org/t/p/w342/${ele?.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/${getPosterSize()}${
+                    ele?.backdrop_path
+                  }`}
+                  loading="lazy"
                   className={`z-0 w-full h-full object-center object-contain transition-all duration-700 lg:absolute ${
                     zoom === item
                       ? "scale-135 lg:scale-145"
