@@ -47,7 +47,7 @@ const SearchedUsersMovies = () => {
         >
           <button
             type="submit"
-            className="w-[20%] flex justify-center items-center h-full"
+            className="w-[20%] flex justify-center items-center h-full cursor-pointer"
           >
             <Search className="h-4 sm:h-5 md:h-6 text-white" />
           </button>
@@ -76,26 +76,28 @@ const SearchedUsersMovies = () => {
         "
       >
         <li
-        tabIndex={0}
+          tabIndex={0}
           onClick={() => setMediaType("all")}
           className="h-full focus:border-b-2 focus:border-red-600 cursor-pointer"
         >
           all
         </li>
         <li
-        tabIndex={0}
+          tabIndex={0}
           onClick={() => setMediaType("movie")}
           className="h-full focus:border-b-2 focus:border-red-600 cursor-pointer"
         >
           movie
         </li>
         <li
+          tabIndex={0}
           onClick={() => setMediaType("tv")}
           className="h-full focus:border-b-2 focus:border-red-600 cursor-pointer"
         >
           tv show
         </li>
         <li
+          tabIndex={0}
           onClick={() => setMediaType("person")}
           className="h-full focus:border-b-2 focus:border-red-600 cursor-pointer"
         >

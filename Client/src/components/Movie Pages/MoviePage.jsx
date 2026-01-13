@@ -20,7 +20,7 @@ import { DataLoading } from "./LoadingPage";
 const MoviePage = () => {
   const [detail, setDetail] = useState(false);
   const [playing, setPlaying] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(false);
   const { id } = useParams();
 
   const {
@@ -65,6 +65,7 @@ const MoviePage = () => {
     const minute = movieDetails?.runtime % 60;
     return `${hour}h:${minute} min`;
   };
+  console.log(videoLoading);
 
   return (
     <main className="w-full h-auto flex flex-col bg-black gap-3 ">
@@ -77,14 +78,16 @@ const MoviePage = () => {
           <section className=" w-full aspect-video">
             {playing ? (
               <>
-                {loading && <DataLoading />}
+                {videoLoading && <DataLoading />}
                 <div className="w-full flex justify-center items-end h-full lg:h-[80%]">
                   <iframe
                     src={movieTrailer?.embedUrl}
-                    className="w-[90%] h-[90%]"
+                    className={`${
+                      videoLoading ? "opacity-0" : "opacity-100"
+                    } w-[90%] h-[90%]`}
                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen"
                     allowFullScreen
-                    onLoad={() => setLoading(false)}
+                    onLoad={() => setVideoLoading(false)}
                   />
                   <div className="h-[90%] w-[2%]">
                     <Cross
@@ -256,7 +259,12 @@ const MoviePage = () => {
                     </ul>
                   </div>
                   <button
-                    onClick={() => setPlaying(true)}
+                    onClick={() => {
+                      console.log("CLICKED");
+
+                      setPlaying(true);
+                      setVideoLoading(true);
+                    }}
                     className="bg-red-600 w-64 h-12 text-xl font-medium rounded-sm hover:animate-pulse cursor-pointer"
                   >
                     Play Now
@@ -391,7 +399,10 @@ const MoviePage = () => {
           </div>
         </section>
         <button
-          onClick={() => setPlaying(true)}
+          onClick={() => {
+            setPlaying(true);
+            setVideoLoading(true);
+          }}
           className="bg-red-600 w-[40%] p-2 text-base font-medium rounded-sm hover:animate-pulse cursor-pointer sm:p-3 sm:text-xl  "
         >
           Play Now
@@ -415,7 +426,7 @@ const MoviePage = () => {
               to={`/movie/lists?list-type=topRated`}
               className="text-red-500 text-sm md:text-base font-semibold"
             >
-              View All
+             check out other movies
             </Link>
           </span>
           <Carousel className="w-full h-auto">

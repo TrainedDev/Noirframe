@@ -22,18 +22,8 @@ const MoviesList = ({ movieListName }) => {
     topMoviesData,
     popularMoviesData,
     filterMoviesData,
-    loading: {
-      trendingLoading,
-      topLoading,
-      popularLoading,
-      filterLoading,
-    },
-    error: {
-      trendingError,
-      topError,
-      popularError,
-      filterError,
-    },
+    loading: { trendingLoading, topLoading, popularLoading, filterLoading },
+    error: { trendingError, topError, popularError, filterError },
   } = useSelector((state) => state.movieData);
   const {
     genres,
@@ -70,15 +60,6 @@ const MoviesList = ({ movieListName }) => {
     popularMoviesData,
   ]);
 
-  const loading =
-    trendingLoading ||
-    topLoading ||
-    popularLoading ||
-    filterLoading;
-
-  const error =
-    trendingError || topError || popularError || filterError;
-
   useEffect(() => {
     const fetchFilteredLists = async () => {
       if (filterMoviesData) {
@@ -87,6 +68,23 @@ const MoviesList = ({ movieListName }) => {
     };
     fetchFilteredLists();
   }, [filterMoviesData, movieLists]);
+
+  let movieLoading = false;
+  let movieError = null;
+
+  if (movieListName === "topRated") {
+    movieLoading = topLoading;
+    movieError = topError;
+  } else if (movieListName === "trending") {
+    movieLoading = trendingLoading;
+    movieError = trendingError;
+  } else if (movieListName === "popular") {
+    movieLoading = popularLoading;
+    movieError = popularError;
+  } else {
+    movieLoading = filterLoading;
+    movieError = filterError;
+  }
 
   return (
     <div className="w-full h-auto overflow-x-hidden p-3">
@@ -144,13 +142,14 @@ const MoviesList = ({ movieListName }) => {
             </button>
           </div>
         </div>
-        {loading ? (
+        {movieLoading ? (
           <DataLoading />
         ) : movieLists ? (
           <div className="w-full h-auto gap-4 items-center flex flex-col p-5">
             <ul className="w-[90%] h-auto grid grid-cols-2 capitalize gap-1 justify-items-center sm:grid-cols-3 lg:gap-4 lg:w-full lg:grid-cols-4">
               {movieLists?.slice(0, count).map((ele, item) => (
                 <li
+                  key={item}
                   onTouchStart={() => setZoom(item)}
                   onTouchEnd={() => setZoom(null)}
                   onMouseEnter={() => setZoom(item)}
@@ -208,7 +207,7 @@ const MoviesList = ({ movieListName }) => {
             </div>
           </div>
         ) : (
-          <img src={error} />
+          <div className="text-white">{movieError}</div>
         )}
       </section>
     </div>

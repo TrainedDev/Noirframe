@@ -6,6 +6,7 @@ import {
   Search,
   Settings,
   Cross,
+  Filter,
 } from "lucide-react";
 import {
   Sidebar,
@@ -21,7 +22,7 @@ import { storeBoolean } from "@/Redux/Slices/componentSlice";
 const items = [
   { title: "Home", url: "/", icon: Home },
   { title: "Inbox", url: "/inbox", icon: Inbox },
-  { title: "Calendar", url: "/calendar", icon: Calendar },
+  { title: "Filter", url: "/movie/lists", icon: Filter },
   { title: "Search", url: "/movie/search/lists", icon: Search },
   { title: "Settings", url: "/settings", icon: Settings },
 ];

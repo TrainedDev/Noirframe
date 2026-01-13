@@ -71,13 +71,13 @@ const ReviewPage = () => {
                         <span
                           className={` h-full absolute rounded-full ${
                             ele == 1
-                              ? "bg-red-600 w-[10%]"
+                              ? "bg-red-600 w-[5%]"
                               : ele == 2
-                              ? "w-[20%] bg-red-500"
+                              ? "w-[20%] bg-red-600"
                               : ele == 3
                               ? " bg-yellow-400 w-[40%]"
                               : ele == 4
-                              ? "w-[70%] bg-green-300"
+                              ? "w-[70%] bg-green-600"
                               : "bg-green-600 w-[90%]"
                           } `}
                         ></span>

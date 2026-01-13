@@ -24,11 +24,11 @@ const SpecificMovieLists = () => {
       </h1>
       <section className="relative w-full h-auto lg:flex">
         <div
-          className={`absolute bg-neutral-900 p-[25px_27px_0_27px] flex flex-col gap-5 -left-1 z-10 w-full -top-15 h-screen overflow-y-scroll lg:overflow-y-visible custom-scroll text-white transition-all duration-700 lg:opacity-100 lg:transition-none lg:translate-none sm:w-[50%] lg:w-[27%] lg:static lg:z-0 lg:bg-transparent ${
+          className={`absolute bg-neutral-900 p-[25px_27px_0_27px] flex flex-col gap-5 -left-1 z-10 w-full -top-15 h-screen overflow-y-scroll custom-scroll text-white transition-all duration-700 lg:opacity-100 lg:transition-none lg:translate-none sm:w-[50%] lg:w-[40%] lg:p-5 lg:static lg:z-0 lg:bg-transparent ${
             filterSidebar ? "translate-x-1 opacity-100" : "-translate-x-full opacity-0"
           }`}
         >
-          <div className="w-full h-[10%] flex justify-between items-center font-semibold xs-sm text-xl uppercase">
+          <div className="w-full h-[10%] flex justify-between items-center font-semibold xs-sm text-xl uppercase ">
             <span className="flex gap-2">
               <h1>Filters</h1>
               <p className="text-base text-red-600 flex items-end">

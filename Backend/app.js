@@ -8,15 +8,16 @@ import { config } from "dotenv";
 config();
 
 const app = express();
-const PORT = process.env.PORT;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
 connectRedis();
 
 app.use(cors({
-    origin: PORT,
+    origin: CLIENT_ORIGIN,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }));
+
 app.use(express.json());
 app.use("/movies",  movieRoutes)
 app.get("/", (req, res) => res.send("server is live"));
