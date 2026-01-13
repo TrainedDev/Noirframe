@@ -12,9 +12,10 @@ import SearchedUsersMovies from "./components/Movie Pages/SearchedUsersMovies";
 
 const App = () => {
   const { appSideBar } = useSelector((state) => state.componentData);
-  
+
   return (
     <>
+      <Router>
         <div className="flex h-auto overflow w-[98vw]">
           <div
             className={`absolute h-screen top-10 w-68 bg-white z-1 transition-all duration-1000 ${
@@ -24,20 +25,22 @@ const App = () => {
             <AppSidebar />
           </div>
           <main className="absolute z-0 w-full overflow-hidden">
-            <Router>
-              <Navbar />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/movie/page/:id" element={<MoviePage />} />
-                <Route path="/movie/lists" element={<SpecificMovieLists />} />
-                <Route path="/movie/:name/lists/:id" element={<TagsPage />} />
-                <Route path="/movie/review/lists/:id" element={<ReviewPage />} />
-                <Route path="/movie/search/lists" element={<SearchedUsersMovies />} />
-              </Routes>
-              <Footer/>
-            </Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/movie/page/:id" element={<MoviePage />} />
+              <Route path="/movie/lists" element={<SpecificMovieLists />} />
+              <Route path="/movie/:name/lists/:id" element={<TagsPage />} />
+              <Route path="/movie/review/lists/:id" element={<ReviewPage />} />
+              <Route
+                path="/movie/search/lists"
+                element={<SearchedUsersMovies />}
+              />
+            </Routes>
+            <Footer />
           </main>
         </div>
+      </Router>
     </>
   );
 };
