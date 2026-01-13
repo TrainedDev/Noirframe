@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import MoviePage from "./components/Movie Pages/MoviePage";
 import Navbar from "./components/Movie Pages/Navbar";
-// import { SidebarProvider } from "./components/ui/sidebar";
 import AppSidebar from "./components/Sidebar/AppSidebar";
 import { useSelector } from "react-redux";
 import SpecificMovieLists from "./components/Movie Pages/Specific Movie List/SpecificMovieLists";

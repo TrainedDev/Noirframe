@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Calendar,
   Home,
   Inbox,
   Search,
@@ -14,11 +13,12 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
+  SidebarMenuButton, 
   SidebarMenuItem,
 } from "../ui/sidebar";
 import { useDispatch } from "react-redux";
 import { storeBoolean } from "@/Redux/Slices/componentSlice";
+import { Link } from "react-router";
 const items = [
   { title: "Home", url: "/", icon: Home },
   { title: "Inbox", url: "/inbox", icon: Inbox },
@@ -51,13 +51,13 @@ const AppSidebar = () => {
               return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a
-                      href={item.url}
+                    <Link
+                      to={item.url}
                       className="flex items-center gap-3 px-3 py-5 hover:bg-transparent hover:text-red-600 "
                     >
                       <Icon className="w-5 h-5" />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );
