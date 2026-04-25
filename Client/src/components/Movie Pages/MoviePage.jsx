@@ -65,7 +65,7 @@ const MoviePage = () => {
     const minute = movieDetails?.runtime % 60;
     return `${hour}h:${minute} min`;
   };
-  console.log(videoLoading);
+  // console.log(videoLoading);
 
   return (
     <main className="w-full h-auto flex flex-col bg-black gap-3 ">

@@ -8,10 +8,11 @@ export const appError = (message, statusCode) => {
 };
 
 export const setMovieTrailer = (movieArr) => {
+  
   const data = movieArr.find(
     (ele) =>
       (ele.type === "Trailer" || ele.type === "Teaser") &&
-      ele.site === "YouTube"
+      ele.site === "YouTube" 
   );
   const trailerData = {
     youtubeUrl: `https://www.youtube.com/watch?v=${data.key}`,

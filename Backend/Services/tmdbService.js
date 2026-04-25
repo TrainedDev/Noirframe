@@ -1,5 +1,9 @@
 import axiosInstance from "../lib/axios.js";
 import { appError, setMovieTrailer } from "../utils/helperFunc.js";
+import {
+  giveMovieFromPromptWithGemini,
+  giveMovieFromPromptWithGroq,
+} from "./aiService.js";
 
 // now playing movie service
 export const nowPlayingMovieService = async () => {
@@ -191,13 +195,60 @@ export const movieReviewsService = async (id) => {
 export const userSearchedService = async (query) => {
   if (!query) appError("required searched data not found", 400);
 
+  const words = query.trim().split(" ");
+  let movieArr = [];
+  const allowedWords = [
+    "recommend",
+    "similar",
+    "like",
+    "suggest",
+    "movie",
+    "movies",
+    "good",
+    "best",
+  ];
+
+  if (
+    words.length > 5 ||
+    words.some((ele) => allowedWords.includes(ele.toLowerCase()))
+  ) {
+    movieArr = [];
+    movieArr = await giveMovieFromPromptWithGemini(query);
+  }
+
+  if (
+    (movieArr.length === 0 && words.length > 5) ||
+    words.some((ele) => allowedWords.includes(ele.toLowerCase()))
+  ) {
+    movieArr = await giveMovieFromPromptWithGroq(query);
+  }
+
+  if (movieArr && movieArr.length > 0) {
+    const responseArr = [];
+    for (const ele of movieArr) {
+      console.log(ele);
+      
+      const response = await axiosInstance.get("/search/multi", {
+        params: {
+          query: ele,
+        },
+      });
+      const data = response?.data?.results;
+
+      if (Array.isArray(data) && data.length > 0) {
+        responseArr.push(...data);
+      }
+    }
+    return responseArr;
+  }
+
   const response = await axiosInstance.get("/search/multi", {
     params: {
       query,
-    }
+    },
   });
   const data = response?.data?.results;
-  
+
   if (!Array.isArray(data)) {
     throw appError("Invalid searched result", 502);
   }

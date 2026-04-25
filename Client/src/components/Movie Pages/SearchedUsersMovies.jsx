@@ -15,6 +15,15 @@ const SearchedUsersMovies = () => {
   } = useSelector((state) => state.movieData);
   const dispatch = useDispatch();
 
+   const data = searchedData?.filter((ele) =>
+    ele.popularity >= 1 &&
+    ele.runtime !== 0 &&
+    ele.backdrop_path !== null &&
+    ele.poster_path !== null
+      ? ele
+      : null,
+  );
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -113,7 +122,7 @@ const SearchedUsersMovies = () => {
       </ul>
       {searchedLoading ? (
         <DataLoading />
-      ) : searchedData ? (
+      ) : data ? (
         <ul
           className="
           w-full grid grid-cols-2 gap-3
@@ -122,7 +131,7 @@ const SearchedUsersMovies = () => {
           lg:grid-cols-6
         "
         >
-          {searchedData
+          {data
             ?.filter((ele) =>
               ele.media_type === mediaType
                 ? ele

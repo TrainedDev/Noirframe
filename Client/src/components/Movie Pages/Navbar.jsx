@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storeBoolean } from "../../Redux/Slices/componentSlice";
 import { LogIn, Menu, Search } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { getUserSearchedResults } from "@/Redux/Slices/movieSlice";
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -10,11 +10,14 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [searchVal, setSearchVal] = useState("");
   const [display, setDisplay] = useState(true);
+  const Navigate = useNavigate();
+
   const {
     searchedData,
     loading: { searchedLoading },
     error: { searchedError },
   } = useSelector((state) => state.movieData);
+
   const debounce = (fn, delay) => {
     let timer;
     return (...args) => {
@@ -33,12 +36,18 @@ const Navbar = () => {
 
   const data = searchedData?.filter((ele) =>
     ele.media_type === "movie" &&
+    ele.popularity >= 1 &&
     ele.runtime !== 0 &&
     ele.backdrop_path !== null &&
     ele.poster_path !== null
       ? ele
-      : null
+      : null,
   );
+  console.log(data, searchedData);
+  
+  console.log("data:",data?.filter(ele => ele?.id === 736168));
+  console.log("working data:",data?.filter(ele => ele?.id === 297762));
+  
   const getPosterSize = () => {
     if (window.innerWidth < 480) return "w342";
     if (window.innerWidth < 768) return "w500";
@@ -64,7 +73,7 @@ const Navbar = () => {
       <div className="h-[42%] flex text-white flex-col justify-center items-center w-[45%] md:h-[50%] md:w-[50%] lg:h-[60%] lg:w-[50%] relative">
         <div className="w-full h-full flex justify-center items-center z-10">
           <input
-            type="search"
+            type="text"
             name="search"
             placeholder="Search"
             value={searchVal}
@@ -82,7 +91,16 @@ const Navbar = () => {
             : ""
         }`}
           />
-          <button className="bg-transparent p-0.5 rounded-r-xs cursor-pointer w-[20%] h-full">
+          <button
+            className="bg-transparent p-0.5 rounded-r-xs cursor-pointer w-[20%] h-full"
+            onClick={() => {
+              if (data.length > 0) {
+                setSearchVal("");
+                setDisplay(false);
+                Navigate("/movie/search/lists");
+              }
+            }}
+          >
             <Search className="w-full h-full" />
           </button>
         </div>

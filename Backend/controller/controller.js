@@ -141,7 +141,8 @@ export const fetchMovieReviews = async (req, res) => {
 // fetch user searched lists 
 export const fetchUserSearchedMedia = async (req, res) => {
   const { name } = req.query;
-  const response = await redisHelper(`searchedData:${name}`, () =>
+  const removeSpace = name.trim().replace(/\s+/g, " ").toLowerCase();
+  const response = await redisHelper(`searchedData:${removeSpace}`, () =>
     userSearchedService(name)
   );
   res
