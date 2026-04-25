@@ -18,20 +18,34 @@ const Navbar = () => {
     error: { searchedError },
   } = useSelector((state) => state.movieData);
 
-  const debounce = (fn, delay) => {
+  const debounce = (fn) => {
     let timer;
-    return (...args) => {
+
+    return (value, delay) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        fn(...args);
+        fn(value);
       }, delay);
     };
+  };
+
+  const getDebounceDelay = (query) => {
+    const val = query.trim().toLowerCase();
+
+    const isAISearch =
+      val.split(" ").length > 3 ||
+      val.includes("give") ||
+      val.includes("like") ||
+      val.includes("where") ||
+      val.includes("movie");
+
+    return isAISearch ? 1000 : 600;
   };
 
   const debounceSearch = useMemo(() => {
     return debounce((val) => {
       dispatch(getUserSearchedResults(val));
-    }, 700);
+    });
   }, [dispatch]);
 
   const data = searchedData?.filter((ele) =>
@@ -43,11 +57,7 @@ const Navbar = () => {
       ? ele
       : null,
   );
-  console.log(data, searchedData);
-  
-  console.log("data:",data?.filter(ele => ele?.id === 736168));
-  console.log("working data:",data?.filter(ele => ele?.id === 297762));
-  
+
   const getPosterSize = () => {
     if (window.innerWidth < 480) return "w342";
     if (window.innerWidth < 768) return "w500";
@@ -75,11 +85,12 @@ const Navbar = () => {
           <input
             type="text"
             name="search"
-            placeholder="Search"
+            placeholder="Search movies or describe one — AI will suggest it..."
             value={searchVal}
             onChange={(e) => {
-              setSearchVal(e.target.value);
-              debounceSearch(e.target.value);
+              const value = e.target.value;
+              setSearchVal(value);
+              debounceSearch(value, getDebounceDelay(value));
             }}
             className={`focus:border-b rounded-l-xs font-light outline-none p-0.5 h-full w-[80%] 
         placeholder:text-[8px] sm:placeholder:text-sm placeholder:font-bold 

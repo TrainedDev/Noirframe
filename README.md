@@ -10,7 +10,7 @@ The project focuses on clean frontend architecture, scalable state management, a
 ## 🚀 Features
 
 - Browse trending, popular, and upcoming movies
-- Planned AI-assisted movie recommendations based on user activity
+- AI-assisted movie recommendations based on user activity
 - Search movies with dynamic filtering
 - Watch trailers using embedded video players
 - Global state management with Redux Toolkit
