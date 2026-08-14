@@ -226,7 +226,6 @@ export const userSearchedService = async (query) => {
   if (movieArr && movieArr.length > 0) {
     const responseArr = [];
     for (const ele of movieArr) {
-      console.log(ele);
 
       const response = await axiosInstance.get("/search/multi", {
         params: {
