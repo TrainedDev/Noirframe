@@ -4,14 +4,14 @@ import { appError } from "../utils/helperFunc.js";
 
 config();
 
-const { BASE_URL, ACCESS_TOKEN } = process.env;
+const { TMDB_BASE_URL, TMDB_ACCESS_TOKEN } = process.env;
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-  timeout: 20_000, // 10s - fail fast instead of hanging forever
+  baseURL: TMDB_BASE_URL,
+  timeout: 20000, // 10s - fail fast instead of hanging forever
   headers: {
-    Authorization: `Bearer ${ACCESS_TOKEN}`,
-    Accept: "application/json",
+    accept: "application/json",
+    Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
   },
 });
 
@@ -23,6 +23,6 @@ axiosInstance.interceptors.response.use(
     }
 
     throw appError("TMDB unreachable", 502);
-  }
+  },
 );
 export default axiosInstance;

@@ -1,13 +1,13 @@
 import { redisHelper } from "../Services/redisCache.js";
 import {
-  fetchFilteredMovies,
-  fetchMovieDetails,
-  fetchPopularMovies,
-  fetchRecommendedMovies,
-  fetchSimilarMoviesData,
-  fetchTopRatedMovies,
-  fetchTrendingMovies,
-  fetchUpComingMovies,
+  fetchFilteredMoviesService,
+  fetchMovieDetailsService,
+  fetchPopularMoviesService,
+  fetchRecommendedMoviesService,
+  fetchSimilarMoviesDataService,
+  fetchTopRatedMoviesService,
+  fetchTrendingMoviesService,
+  fetchUpComingMoviesService,
   genreService,
   movieReviewsService,
   nowPlayingMovieService,
@@ -34,20 +34,15 @@ export const fetchMovieData = async (req, res) => {
   const { id } = req.params;
 
   const response = await redisHelper(`movieDetails:${id}`, () =>
-    fetchMovieDetails(id)
+    fetchMovieDetailsService(id),
   );
-
-  res.status(200).json({
-    msg: "movie details successfully fetched",
-    data: response.moviesData,
-    movieTags: response.movieTags,
-    movieTrailer: response.trailerData,
-  });
+  
+  res.status(200).json({msg: "movie details successfully fetched", data: response});
 };
 
 // fetch popular movies
 export const popularMovies = async (req, res) => {
-  const response = await redisHelper("popularMovies", fetchPopularMovies);
+  const response = await redisHelper("popularMovies", fetchPopularMoviesService);
   res.status(200).json({
     msg: "popular movies successfully fetched",
     data: response,
@@ -56,7 +51,7 @@ export const popularMovies = async (req, res) => {
 
 // fetch top-rated movies
 export const topRatedMovies = async (req, res) => {
-  const response = await redisHelper("topRatedMovies", fetchTopRatedMovies);
+  const response = await redisHelper("topRatedMovies", fetchTopRatedMoviesService);
   res.status(200).json({
     msg: "top rated movies successfully fetched",
     data: response,
@@ -65,7 +60,7 @@ export const topRatedMovies = async (req, res) => {
 
 // fetch this week trending movies
 export const thisWeekTrendingMovies = async (req, res) => {
-  const response = await redisHelper("trendingMovies", fetchTrendingMovies);
+  const response = await redisHelper("trendingMovies", fetchTrendingMoviesService);
 
   res.status(200).json({
     msg: "this week trending movies successfully fetched",
@@ -75,7 +70,7 @@ export const thisWeekTrendingMovies = async (req, res) => {
 
 // fetch upcoming movies
 export const upComingMovies = async (req, res) => {
-  const response = await redisHelper("upComingMovies", fetchUpComingMovies);
+  const response = await redisHelper("upComingMovies", fetchUpComingMoviesService);
   res.status(200).json({
     msg: "upcoming movies successfully fetched",
     data: response,
@@ -86,7 +81,7 @@ export const upComingMovies = async (req, res) => {
 export const fetchMovieRecommends = async (req, res) => {
   const { id } = req.params;
   const response = await redisHelper(`recommendMovies:${id}`, () =>
-    fetchRecommendedMovies(id)
+    fetchRecommendedMoviesService(id),
   );
 
   res.status(200).json({
@@ -100,7 +95,7 @@ export const fetchSimilarMovie = async (req, res) => {
   const { id } = req.params;
 
   const response = await redisHelper(`similarMovies:${id}`, () =>
-    fetchSimilarMoviesData(id)
+    fetchSimilarMoviesDataService(id),
   );
 
   res.status(200).json({
@@ -111,13 +106,12 @@ export const fetchSimilarMovie = async (req, res) => {
 
 //fetch user custom movies list
 export const userCustomMovieLists = async (req, res) => {
-  
   const { tmdbParamsObj, key } = await createQueryParams(
     "filteredMovies",
-    req.query
+    req.query,
   );
   const response = await redisHelper(key, () =>
-    fetchFilteredMovies(tmdbParamsObj)
+    fetchFilteredMoviesService(tmdbParamsObj),
   );
 
   res.status(200).json({
@@ -126,11 +120,11 @@ export const userCustomMovieLists = async (req, res) => {
   });
 };
 
-// fetch movie reviews 
+// fetch movie reviews
 export const fetchMovieReviews = async (req, res) => {
   const { id } = req.params;
   const response = await redisHelper(`movieReview:${id}`, () =>
-    movieReviewsService(id)
+    movieReviewsService(id),
   );
 
   res
@@ -138,12 +132,12 @@ export const fetchMovieReviews = async (req, res) => {
     .json({ msg: "movies reviews successfully fetched", data: response });
 };
 
-// fetch user searched lists 
+// fetch user searched lists
 export const fetchUserSearchedMedia = async (req, res) => {
   const { name } = req.query;
   const removeSpace = name.trim().replace(/\s+/g, " ").toLowerCase();
   const response = await redisHelper(`searchedData:${removeSpace}`, () =>
-    userSearchedService(name)
+    userSearchedService(name),
   );
   res
     .status(200)

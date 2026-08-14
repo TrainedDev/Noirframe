@@ -13,7 +13,7 @@ import {
   upComingMovies,
   userCustomMovieLists,
 } from "../controller/controller.js";
-import { asyncHandlers } from "../middlewere/handlers.js";
+import { asyncHandlers } from "../utils/handlers.js";
 
 const route = Router();
 

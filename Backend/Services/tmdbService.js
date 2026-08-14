@@ -32,24 +32,24 @@ export const genreService = async () => {
 };
 
 // movie details service
-export const fetchMovieDetails = async (id) => {
+export const fetchMovieDetailsService = async (id) => {
   if (!id) throw appError("movie id not found", 400);
 
-  const movieTags = await fetchMovieTags(id);
-  const moviesData = await axiosInstance.get(`/movie/${id}`);
+  const movieTags = await fetchMovieTagsService(id);
+  const movieDetails = await axiosInstance.get(`/movie/${id}`);
   const movieTrailerData = await axiosInstance.get(`/movie/${id}/videos`);
 
-  if (!moviesData.data || !Array.isArray(movieTrailerData.data?.results)) {
+  if (!movieDetails.data || !Array.isArray(movieTrailerData.data?.results)) {
     throw appError("Invalid TMDB recommendations response", 502);
   }
 
   const trailerData = setMovieTrailer(movieTrailerData.data.results);
 
-  return { moviesData: moviesData.data, movieTags, trailerData };
+  return  {...movieDetails.data, movieTags, trailerData } ;
 };
 
 // user choose tags service
-export const fetchKeyWords = async (tagsArr) => {
+export const fetchKeyWordsService = async (tagsArr) => {
   const arr = [];
 
   if (!Array.isArray(tagsArr) || tagsArr.length === 0)
@@ -67,7 +67,7 @@ export const fetchKeyWords = async (tagsArr) => {
 };
 
 // movie tags service
-const fetchMovieTags = async (id) => {
+const fetchMovieTagsService = async (id) => {
   if (!id) throw appError("movie id not found", 400);
 
   const response = await axiosInstance.get(`movie/${id}/keywords`);
@@ -81,7 +81,7 @@ const fetchMovieTags = async (id) => {
 };
 
 // popular movie service
-export const fetchPopularMovies = async () => {
+export const fetchPopularMoviesService = async () => {
   const response = await axiosInstance("/movie/popular");
   const data = response.data?.results;
 
@@ -94,7 +94,7 @@ export const fetchPopularMovies = async () => {
 };
 
 // top rated movie service
-export const fetchTopRatedMovies = async () => {
+export const fetchTopRatedMoviesService = async () => {
   const response = await axiosInstance("/movie/top_rated");
   const data = response.data?.results;
 
@@ -107,7 +107,7 @@ export const fetchTopRatedMovies = async () => {
 };
 
 // trending movie service
-export const fetchTrendingMovies = async () => {
+export const fetchTrendingMoviesService = async () => {
   const response = await axiosInstance("/trending/movie/week");
   const data = response.data?.results;
 
@@ -120,7 +120,7 @@ export const fetchTrendingMovies = async () => {
 };
 
 // upComing movie service
-export const fetchUpComingMovies = async () => {
+export const fetchUpComingMoviesService = async () => {
   const response = await axiosInstance("/movie/upcoming");
   const data = response.data?.results;
 
@@ -133,7 +133,7 @@ export const fetchUpComingMovies = async () => {
 };
 
 // recommend movie service
-export const fetchRecommendedMovies = async (movieId) => {
+export const fetchRecommendedMoviesService = async (movieId) => {
   if (!movieId) throw appError("movie id not found", 400);
 
   const response = await axiosInstance.get(`/movie/${movieId}/recommendations`);
@@ -148,7 +148,7 @@ export const fetchRecommendedMovies = async (movieId) => {
 };
 
 // similar movie service
-export const fetchSimilarMoviesData = async (movieId) => {
+export const fetchSimilarMoviesDataService = async (movieId) => {
   if (!movieId) throw appError("movie id not found", 400);
   const response = await axiosInstance.get(`/movie/${movieId}/similar`);
   const data = response?.data?.results;
@@ -162,7 +162,7 @@ export const fetchSimilarMoviesData = async (movieId) => {
 };
 
 // filter movie service
-export const fetchFilteredMovies = async (paramsObj) => {
+export const fetchFilteredMoviesService = async (paramsObj) => {
   const response = await axiosInstance.get(`/discover/movie`, {
     params: paramsObj,
   });
@@ -227,7 +227,7 @@ export const userSearchedService = async (query) => {
     const responseArr = [];
     for (const ele of movieArr) {
       console.log(ele);
-      
+
       const response = await axiosInstance.get("/search/multi", {
         params: {
           query: ele,

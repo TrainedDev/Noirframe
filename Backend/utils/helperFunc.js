@@ -1,4 +1,4 @@
-import { fetchKeyWords } from "../Services/tmdbService.js";
+import { fetchKeyWordsService } from "../Services/tmdbService.js";
 
 export const appError = (message, statusCode) => {
   const error = new Error(message);
@@ -44,7 +44,7 @@ export const createQueryParams = async (prefix, paramsData) => {
   let keyWordIds = [];
   if (tags) {
     const tagsArr = tags.split(",");
-    keyWordIds = await fetchKeyWords(tagsArr);
+    keyWordIds = await fetchKeyWordsService(tagsArr);
   }
 
   const tmdbParamsObj = {
