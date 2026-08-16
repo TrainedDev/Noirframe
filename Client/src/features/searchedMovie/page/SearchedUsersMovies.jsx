@@ -15,14 +15,14 @@ const SearchedUsersMovies = () => {
   } = useSelector((state) => state.searched);
   const dispatch = useDispatch();
 
-   const data = searchedData?.filter((ele) =>
-    ele.popularity >= 1 &&
-    ele.runtime !== 0 &&
-    ele.backdrop_path !== null &&
-    ele.poster_path !== null
-      ? ele
-      : null,
-  );
+  const data =
+    searchedData?.filter(
+      (ele) =>
+        ele.popularity >= 1 &&
+        ele.runtime !== 0 &&
+        ele.backdrop_path !== null &&
+        ele.poster_path !== null,
+    ) ?? [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,13 +35,12 @@ const SearchedUsersMovies = () => {
     dispatch(getUserSearchedResults(searchVal));
   };
 
-    const getPosterSize = () => {
+  const getPosterSize = () => {
     if (window.innerWidth < 480) return "w342";
     if (window.innerWidth < 768) return "w500";
     return "w780";
   };
 
-  
   return (
     <main
       className="
@@ -122,7 +121,7 @@ const SearchedUsersMovies = () => {
       </ul>
       {searchedLoading ? (
         <DataLoading />
-      ) : data ? (
+      ) : data?.length > 0 ? (
         <ul
           className="
           w-full grid grid-cols-2 gap-3
@@ -136,20 +135,20 @@ const SearchedUsersMovies = () => {
               ele.media_type === mediaType
                 ? ele
                 : mediaType === "all"
-                ? ele
-                : null
+                  ? ele
+                  : null,
             )
             .map((ele, i) => (
               <Link
                 key={i}
-                to={`/movie/page/:${ele.id}`}
+                to={`/movie/page/${ele.id}`}
                 className="w-full aspect-2/3"
               >
                 <li className="w-full h-full relative flex items-end">
                   <img
-                   src={`https://image.tmdb.org/t/p/${getPosterSize()}${
-                    ele?.backdrop_path
-                  }`}
+                    src={`https://image.tmdb.org/t/p/${getPosterSize()}${
+                      ele?.backdrop_path
+                    }`}
                     alt="movie"
                     loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover"
@@ -169,9 +168,27 @@ const SearchedUsersMovies = () => {
               </Link>
             ))}
         </ul>
-      ) : (
+      ) : searchedError ? (
         <div className="w-full capitalize h-full">
-          <h1>{searchedError}</h1>
+          {" "}
+          <h1>{searchedError.message} || "no movie found"</h1>{" "}
+        </div>
+      ) : (
+        <div className="w-full flex justify-center items-center py-20">
+          <div className="text-center">
+            <h1 className="text-xl sm:text-2xl font-semibold">
+              🎬 No movie found!
+            </h1>
+
+            <p className="mt-2 text-neutral-400">
+              Are you sure that's the movie's name? Even our movie nerds
+              couldn't find it.
+            </p>
+
+            <p className="mt-1 text-sm text-neutral-500">
+              Try checking the movie name and search again.
+            </p>
+          </div>
         </div>
       )}
     </main>
