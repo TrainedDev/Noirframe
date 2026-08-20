@@ -10,8 +10,6 @@ config();
 const app = express();
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN;
 
-connectRedis();
-
 app.use(
   cors({
     origin: [CLIENT_ORIGIN, "http://localhost:5173"],
@@ -19,6 +17,8 @@ app.use(
     credentials: true,
   }),
 );
+
+connectRedis();
 
 app.use(express.json());
 app.use("/movies", movieRoutes);
