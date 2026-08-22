@@ -14,20 +14,22 @@
 
 | | |
 |---|---|
-| 🖥️ **Live Demo** | [noirframe-client.vercel.app](https://noirframe-client.vercel.app) |
-| 💻 **Repository** | [github.com/TrainedDev/Noirframe](https://github.com/TrainedDev/Noirframe) |
+| 🖥️ **Live Demo** | [NoirFrame](https://noirframe-client.vercel.app) |
+| 💻 **Repository** | [GitHub Repository](https://github.com/TrainedDev/Noirframe) |
 
-> ⚠️ Movie data depends on an external API and a free-tier-hosted backend — see [Limitations](#️-external-api--free-tier-limitations) if something feels slow on first load.
-
-### How to use NoirFrame
-
-1. Open the live site — the home page auto-plays through a hero carousel of now-playing movies, plus trending, popular, top-rated, and upcoming rows.
-2. Click any movie poster to open its full details page.
-3. Watch the trailer directly in-page, read the overview/genres/cast info, and browse similar and recommended titles.
-4. Scroll down for user reviews, or view the full list on a dedicated reviews page.
-5. Use the search bar to find a movie by title — or describe one in natural language (e.g. *"movie where a guy relives the same day over and over"*) and let the AI layer suggest matching titles.
-6. Use the filter sidebar to browse by genre, tag, release year, or runtime.
-
+> ⚠️ **Free-Tier Deployment Notice**
+>
+> NoirFrame's backend is currently deployed using **free-tier/serverless infrastructure**. Because of the hosting limitations, the backend may experience **cold starts after periods of inactivity**.
+>
+> As a result, the live application may occasionally experience:
+>
+> - 🕐 Slow initial responses while the backend starts
+> - ⚠️ Temporary `502`/`503` errors during cold starts
+> - 🐌 Slower responses for the first request after inactivity
+>
+> The frontend includes error handling and retry behavior, but temporary delays can still occur depending on the backend's cold-start time.
+>
+> **For the most reliable experience, especially if the live demo is temporarily unavailable, please run NoirFrame locally using the setup instructions below.**
 ---
 
 ## ✨ Features
@@ -361,11 +363,17 @@ The live frontend is deployed at **[noirframe-client.vercel.app](https://noirfra
 
 ## ⚠️ External API & Free-Tier Limitations
 
-> ⚠️ **External API notice:** NoirFrame relies on TMDB for movie data. If TMDB is temporarily unavailable, rate-limited, or experiencing network issues, uncached movie requests may fail or take longer than usual. Redis caching reduces this risk for data that's already been requested once, but cannot eliminate it for new requests.
+> ⚠️ **Free-Tier Hosting Notice:** The NoirFrame backend currently runs on free-tier/serverless infrastructure. Free-tier services may become inactive after periods without requests and require time to start when a new request arrives.
+>
+> Therefore, the live application may occasionally be **slow on the first request** or return temporary **502/503 errors** while the backend is starting.
+>
+> These delays are caused by the hosting environment rather than the application's normal request-processing logic.
+>
+> **If the live demo is temporarily unavailable or unusually slow, please wait a short while and retry. For a more reliable experience, run the application locally using the Local Development instructions.**
 
-> ⚠️ **Free-tier deployment notice:** If the backend is deployed on free-tier/serverless infrastructure, requests after a period of inactivity may take longer than usual while the function/service cold-starts. Subsequent requests are typically faster.
+> ⚠️ **TMDB Availability Notice:** NoirFrame relies on the external TMDB API for movie data. TMDB outages, rate limits, network problems, or API changes can affect uncached requests. Redis caching can continue serving previously cached data, but it cannot guarantee availability for data that has not yet been cached.
 
-These are external-service and hosting-tier characteristics, not application bugs.
+> ⚠️ **AI Provider Notice:** AI-assisted search depends on external Gemini and Groq APIs. If the primary Gemini request fails or returns no usable result, NoirFrame attempts to use Groq as a fallback. AI-assisted search may therefore be temporarily unavailable if both providers are unreachable or their APIs experience issues.
 
 ---
 
